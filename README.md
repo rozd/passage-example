@@ -31,7 +31,7 @@ See the [Examples](#examples) section below for the available targets and any pe
 ## Examples
 
 <details>
-<summary><h3>PassageExample</h3> — minimal in-memory setup</summary>
+<summary><h3>🛂 PassageExample</h3> — minimal in-memory setup</summary>
 
 Demonstrates the smallest viable Passage configuration: an in-memory store, username + password registration, email magic-link passwordless login, JWT access tokens, sessions, and the built-in Leaf register/login views. No external services required — ideal for exploring the API surface.
 
@@ -41,7 +41,7 @@ swift run PassageExample
 </details>
 
 <details>
-<summary><h3>PassageFederatedLoginExample</h3> — OAuth federated login</summary>
+<summary><h3>🌐 PassageFederatedLoginExample</h3> — OAuth federated login</summary>
 
 Demonstrates federated login via [`PassageImperial`](https://github.com/rozd/passage-imperial) (GitHub + Google), backed by a Postgres database via [`PassageFluent`](https://github.com/rozd/passage-fluent). Includes automatic account linking by email or phone, with a manual fallback when multiple matches exist.
 
@@ -72,7 +72,7 @@ swift run PassageFederatedLoginExample
 </details>
 
 <details>
-<summary><h3>PassagePasskeyExample</h3> — WebAuthn passkeys</summary>
+<summary><h3>🔑 PassagePasskeyExample</h3> — WebAuthn passkeys</summary>
 
 Demonstrates passwordless authentication with WebAuthn passkeys via [`PassageWebAuthn`](https://github.com/rozd/passage-webauthn). Uses an in-memory store and ships the built-in Leaf views for the passkey signup and authentication ceremonies. The relying party is configured as `localhost` / `Passage Demo`.
 
