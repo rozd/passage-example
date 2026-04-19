@@ -1,18 +1,6 @@
 # PassageExample
 
-Example Vapor applications demonstrating the [Passage](https://github.com/rozd/passage) authentication framework. Each example target wires up a different combination of Passage services (storage, email delivery, federated login, passkeys) so you can pick the one closest to your use case and adapt it.
-
-## Examples
-
-This package ships three independent executable targets:
-
-| Target | Storage | Highlights |
-| --- | --- | --- |
-| `PassageExample` | In-memory | Minimal setup — username + password and email magic link. Good starting point for exploring the API surface without external services. |
-| `PassageFederatedLoginExample` | Postgres via `PassageFluent` | OAuth federated login (GitHub + Google) via `PassageImperial`, with automatic account linking by email/phone. |
-| `PassagePasskeyExample` | In-memory | WebAuthn-based passkey registration and authentication via `PassageWebAuthn`, with built-in Leaf views for the passkey ceremonies. |
-
-All three share the same JWT key material (`keypair.jwks`), Leaf-rendered views (mint-dark theme), session middleware, and email magic-link configuration.
+A collection of [Vapor](https://vapor.codes) applications demonstrating the [Passage](https://github.com/vapor-community/passage) authentication framework. Each example is an independent executable target that wires up a different combination of Passage services — pick the one closest to your use case and adapt it.
 
 ## Getting Started
 
@@ -20,78 +8,88 @@ All three share the same JWT key material (`keypair.jwks`), Leaf-rendered views 
 
 - Swift 6.0+
 - macOS 13+
-- For `PassageFederatedLoginExample`: a running Postgres instance (see `docker-compose.yml`)
+- A Postgres instance — only required for `PassageFederatedLoginExample`
 
-### Building
+### Build
 
 ```bash
 swift build
 ```
 
-### Running an example
+### Run
 
-Because the package contains multiple executable targets, you must specify which one to run:
+This package contains multiple executable targets, so you must name the one you want to run:
 
 ```bash
-# Basic in-memory example
-swift run PassageExample
-
-# OAuth federated login with Postgres
-swift run PassageFederatedLoginExample
-
-# Passkey / WebAuthn example
-swift run PassagePasskeyExample
+swift run <TargetName>
 ```
 
-The server listens on `http://localhost:8080` by default.
+The server listens on `http://localhost:8080`. JWT signing keys are loaded from `keypair.jwks` at the project root.
 
-### Federated login configuration
+See the [Examples](#examples) section below for the available targets and any per-example setup.
 
-`PassageFederatedLoginExample` reads database connection details and OAuth credentials from the environment:
+## Examples
+
+<details>
+<summary><strong>PassageExample</strong> — minimal in-memory setup</summary>
+
+Demonstrates the smallest viable Passage configuration: an in-memory store, username + password registration, email magic-link passwordless login, JWT access tokens, sessions, and the built-in Leaf register/login views. No external services required — ideal for exploring the API surface.
+
+```bash
+swift run PassageExample
+```
+
+</details>
+
+<details>
+<summary><strong>PassageFederatedLoginExample</strong> — OAuth federated login</summary>
+
+Demonstrates federated login via [`PassageImperial`](https://github.com/rozd/passage-imperial) (GitHub + Google), backed by a Postgres database via [`PassageFluent`](https://github.com/rozd/passage-fluent). Includes automatic account linking by email or phone, with a manual fallback when multiple matches exist.
+
+**Additional setup**
+
+Provide a running Postgres instance and OAuth credentials via environment variables:
 
 ```bash
 # Postgres (defaults shown)
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USERNAME=vapor_username
-DATABASE_PASSWORD=vapor_password
-DATABASE_NAME=passage_example
+export DATABASE_HOST=localhost
+export DATABASE_PORT=5432
+export DATABASE_USERNAME=vapor_username
+export DATABASE_PASSWORD=vapor_password
+export DATABASE_NAME=passage_example
 
-# OAuth providers (required by Imperial)
-GITHUB_CLIENT_ID=...
-GITHUB_CLIENT_SECRET=...
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
+# OAuth providers
+export GITHUB_CLIENT_ID=...
+export GITHUB_CLIENT_SECRET=...
+export GOOGLE_CLIENT_ID=...
+export GOOGLE_CLIENT_SECRET=...
 ```
 
-A `docker-compose.yml` is provided to bring up a local Postgres for development.
-
-### Passkey configuration
-
-`PassagePasskeyExample` is configured for `localhost` as the WebAuthn relying party. Browsers require WebAuthn over `https://` — except for `localhost`, which is treated as a secure context, so the example works as-is during local development.
-
-## Project Layout
-
-```
-Sources/
-├── PassageExample/                  # In-memory store, password + magic link
-├── PassageFederatedLoginExample/    # Postgres + Imperial OAuth
-└── PassagePasskeyExample/           # WebAuthn passkeys
-keypair.jwks                         # JWT signing keys (dev only)
-docker-compose.yml                   # Local Postgres for the federated example
-```
-
-Each target follows the standard Vapor layout: `entrypoint.swift` boots the application, `configure.swift` wires up Passage and middleware, and `routes.swift` registers any app-specific routes on top of the ones Passage provides.
-
-## Testing
+Configure the OAuth callback URLs in your provider dashboards to point at `http://localhost:8080`.
 
 ```bash
-swift test
+swift run PassageFederatedLoginExample
 ```
 
-## See more
+</details>
 
-- [Passage on GitHub](https://github.com/rozd/passage)
-- [Vapor Website](https://vapor.codes)
+<details>
+<summary><strong>PassagePasskeyExample</strong> — WebAuthn passkeys</summary>
+
+Demonstrates passwordless authentication with WebAuthn passkeys via [`PassageWebAuthn`](https://github.com/rozd/passage-webauthn). Uses an in-memory store and ships the built-in Leaf views for the passkey signup and authentication ceremonies. The relying party is configured as `localhost` / `Passage Demo`.
+
+**Additional setup**
+
+WebAuthn requires a secure context. Browsers treat `localhost` as secure, so the example works over plain `http://` during local development — no TLS setup needed. If you change the host, you'll need HTTPS and matching `relyingPartyID` / `relyingPartyOrigin` values in `Sources/PassagePasskeyExample/configure.swift`.
+
+```bash
+swift run PassagePasskeyExample
+```
+
+</details>
+
+## See also
+
+- [Passage](https://github.com/vapor-community/passage) — core authentication framework
 - [Vapor Documentation](https://docs.vapor.codes)
-- [WebAuthn / Passkeys](https://www.w3.org/TR/webauthn-3/)
+- [WebAuthn / Passkeys spec](https://www.w3.org/TR/webauthn-3/)
