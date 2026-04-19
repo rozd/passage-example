@@ -31,23 +31,21 @@ See the [Examples](#examples) section below for the available targets and any pe
 ## Examples
 
 <details>
-<summary><strong>PassageExample</strong> — minimal in-memory setup</summary>
+<summary><h3>PassageExample</h3> — minimal in-memory setup</summary>
 
 Demonstrates the smallest viable Passage configuration: an in-memory store, username + password registration, email magic-link passwordless login, JWT access tokens, sessions, and the built-in Leaf register/login views. No external services required — ideal for exploring the API surface.
 
 ```bash
 swift run PassageExample
 ```
-
 </details>
 
 <details>
-<summary><strong>PassageFederatedLoginExample</strong> — OAuth federated login</summary>
+<summary><h3>PassageFederatedLoginExample</h3> — OAuth federated login</summary>
 
 Demonstrates federated login via [`PassageImperial`](https://github.com/rozd/passage-imperial) (GitHub + Google), backed by a Postgres database via [`PassageFluent`](https://github.com/rozd/passage-fluent). Includes automatic account linking by email or phone, with a manual fallback when multiple matches exist.
 
-**Additional setup**
-
+#### Additional setup:
 Provide a running Postgres instance and OAuth credentials via environment variables:
 
 ```bash
@@ -74,12 +72,11 @@ swift run PassageFederatedLoginExample
 </details>
 
 <details>
-<summary><strong>PassagePasskeyExample</strong> — WebAuthn passkeys</summary>
+<summary><h3>PassagePasskeyExample</h3> — WebAuthn passkeys</summary>
 
 Demonstrates passwordless authentication with WebAuthn passkeys via [`PassageWebAuthn`](https://github.com/rozd/passage-webauthn). Uses an in-memory store and ships the built-in Leaf views for the passkey signup and authentication ceremonies. The relying party is configured as `localhost` / `Passage Demo`.
 
-**Additional setup**
-
+#### Additional setup:
 WebAuthn requires a secure context. Browsers treat `localhost` as secure, so the example works over plain `http://` during local development — no TLS setup needed. If you change the host, you'll need HTTPS and matching `relyingPartyID` / `relyingPartyOrigin` values in `Sources/PassagePasskeyExample/configure.swift`.
 
 ```bash
