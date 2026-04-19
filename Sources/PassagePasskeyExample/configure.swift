@@ -1,6 +1,7 @@
 import Leaf
 import Vapor
 import Passage
+import PassageWebAuthn
 import PassageOnlyForTest
 
 // configures your application
@@ -20,6 +21,13 @@ public func configure(_ app: Application) async throws {
             store: Passage.OnlyForTest.InMemoryStore(),
             emailDelivery: nil,
             phoneDelivery: nil,
+            passkey: WebAuthnPasskeyService(
+                configuration: .init(
+                    relyingPartyID: "localhost",
+                    relyingPartyName: "Passage Demo",
+                    relyingPartyOrigin: "http://localhost:8080",
+                )
+            ),
         ),
         configuration: .init(
             origin: URL(string: "http://localhost:8080")!,
@@ -62,6 +70,20 @@ public func configure(_ app: Application) async throws {
                         colors: .mintDark
                     ),
                     identifier: .username
+                ),
+                passkeySignup: .init(
+                    style: .minimalism,
+                    theme: .init(
+                        colors: .mintDark
+                    ),
+                    identifier: .username
+                ),
+                passkeyAuthenticate: .init(
+                    style: .minimalism,
+                    theme: .init(
+                        colors: .mintDark
+                    ),
+                    redirect: .init()
                 )
             )
         )

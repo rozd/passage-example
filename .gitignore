@@ -12,3 +12,5 @@ db.sqlite
 default.profraw
 
 keypair.jwks
+
+.claude/settings.local.json
