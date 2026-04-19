@@ -22,7 +22,7 @@ let package = Package(
         // 🔐 OAuth2 authentication framework for Vapor.
         .package(url: "https://github.com/vapor-community/Imperial.git", from: "2.2.0"),
         // 🛂 Authentication and user management for Vapor.
-        .package(url: "https://github.com/rozd/passage", branch: "main"),
+        .package(url: "https://github.com/vapor-community/passage", branch: "main"),
         .package(url: "https://github.com/rozd/passage-fluent", branch: "main"),
         .package(url: "https://github.com/rozd/passage-imperial", branch: "main"),
         .package(url: "https://github.com/rozd/passage-webauthn", branch: "main"),
