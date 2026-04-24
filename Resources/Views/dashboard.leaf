@@ -166,29 +166,6 @@
             margin: 5px 0;
         }
 
-        .line {
-            position: relative;
-            margin: 15px 0;
-        }
-
-        .line::before,
-        .line::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background-color: #(theme.outline);
-        }
-
-        .line::before {
-            left: 0;
-        }
-
-        .line::after {
-            right: 0;
-        }
-
         .btn {
             margin-top: 10px;
             width: 100%;
@@ -211,13 +188,6 @@
 
         .btn:hover {
             border: 1px solid #(theme.primary);
-        }
-
-        .oauth-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
         }
 
         @media (max-width: 480px) {
