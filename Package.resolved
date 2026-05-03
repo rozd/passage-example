@@ -124,7 +124,7 @@
       "location" : "https://github.com/vapor-community/passage",
       "state" : {
         "branch" : "main",
-        "revision" : "1be6d6ed9fc11745ffd9ca0d05087d944ea67880"
+        "revision" : "0abf513ce03fe49afee3846ccec027718a685ebe"
       }
     },
     {
@@ -160,7 +160,7 @@
       "location" : "https://github.com/rozd/passage-webauthn",
       "state" : {
         "branch" : "main",
-        "revision" : "ec8963a3ff0c56abf1b279fadebb6b7ee9c9e8d9"
+        "revision" : "58601993556cc75f148f7d04398d0fbc350e6675"
       }
     },
     {

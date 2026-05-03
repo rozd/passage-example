@@ -56,6 +56,12 @@ public func configure(_ app: Application) async throws {
                     maxAttempts: 5
                 )
             ),
+            passkey: .init(
+                routes: .init(
+                    guestRegistrationBegin: .default,
+                    guestRegistrationFinish: .default,
+                )
+            ),
             views: .init(
                 register: .init(
                     style: .minimalism,
@@ -71,20 +77,27 @@ public func configure(_ app: Application) async throws {
                     ),
                     identifier: .username
                 ),
-                passkeySignup: .init(
+                passkeyGuestRegistration: .init(
                     style: .minimalism,
                     theme: .init(
                         colors: .mintDark
                     ),
-                    identifier: .username
+                    identifier: .email
                 ),
-                passkeyAuthenticate: .init(
+                passkeyAuthentication: .init(
                     style: .minimalism,
                     theme: .init(
                         colors: .mintDark
                     ),
                     redirect: .init()
                 )
+            )
+        ),
+        hooks: .init(
+            passkey: .hook(
+                didFinishGuestRegistration: { result, user, req  in
+                    let _ = try? await req.passage.verification.sendEmailCode(to: user)
+                },
             )
         )
     )
