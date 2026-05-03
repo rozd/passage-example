@@ -64,6 +64,20 @@ public func configure(_ app: Application) async throws {
                     identifier: .username
                 )
             )
+        ),
+        hooks: .init(
+            account: .hook(
+                willRegisterUser: { form, req in
+                    if let username = form.username, username == "banneduser" {
+                        req.logger.info("Attempt to register with banned username: \(username)")
+                        throw AuthenticationError.invalidUsernameOrPassword
+                    }
+                },
+                willLoginUser: { user, req in
+                    req.logger.info("Will log in user: \(user.id, default: "unknown")")
+                    print(">>> willLoginUser hook called for user: \(user.id, default: "unknown")")
+                },
+            )
         )
     )
 
