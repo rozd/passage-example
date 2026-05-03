@@ -133,7 +133,7 @@
       "location" : "https://github.com/rozd/passage-fluent",
       "state" : {
         "branch" : "main",
-        "revision" : "c7b531a4d3ad7f7ef9d355deca4444fdf46ed16c"
+        "revision" : "c234de1dc7049aa81f769dadf5d065971980e580"
       }
     },
     {
@@ -151,7 +151,7 @@
       "location" : "https://github.com/rozd/passage-mailgun",
       "state" : {
         "branch" : "main",
-        "revision" : "a8796dede2fd0498e5f523c2553efda9e52e0a61"
+        "revision" : "0e0dc8f936ed5fdd51a37c7876d934a014686392"
       }
     },
     {
@@ -160,7 +160,7 @@
       "location" : "https://github.com/rozd/passage-webauthn",
       "state" : {
         "branch" : "main",
-        "revision" : "58601993556cc75f148f7d04398d0fbc350e6675"
+        "revision" : "84a7b1ce53a5987ce706f527d2eba789be82e789"
       }
     },
     {
