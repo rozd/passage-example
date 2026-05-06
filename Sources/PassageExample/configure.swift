@@ -54,6 +54,7 @@ public func configure(_ app: Application) async throws {
                     theme: .init(
                         colors: .mintDark
                     ),
+                    redirect: .init(onSuccess: "/auth/login", onFailure: nil),
                     identifier: .username
                 ),
                 login: .init(
@@ -61,6 +62,7 @@ public func configure(_ app: Application) async throws {
                     theme: .init(
                         colors: .mintDark
                     ),
+                    redirect: .init(onSuccess: "/dashboard", onFailure: nil),
                     identifier: .username
                 )
             )

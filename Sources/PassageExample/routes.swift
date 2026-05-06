@@ -10,12 +10,25 @@ func routes(_ app: Application) throws {
         "Hello, world!"
     }
 
-    app
+    let protected = app
         .grouped(PassageSessionAuthenticator())
         .grouped(PassageBearerAuthenticator())
         .grouped(PassageGuard())
-        .get("protected") { req async throws -> String in
-            let user = try req.passage.user
-            return "Hello, \(String(describing: user.id))!"
+
+    protected.get("protected") { req async throws -> String in
+        let user = try req.passage.user
+        return "Hello, \(String(describing: user.id))!"
+    }
+
+    protected.get("dashboard") { req async throws in
+        let view = try DashboardView(
+            theme: .mintDark,
+            params: .init(
+                user: req.passage.user,
+                logoutRoute: "/auth/logout"
+            )
+        )
+
+        return try await req.view.render("dashboard", view)
     }
 }
