@@ -75,21 +75,20 @@ public func configure(_ app: Application) async throws {
                     maxAttempts: 5
                 )
             ),
-            oauth: .init(
+            federatedLogin: .init(
+                routes: .init(group: "connect"),
                 providers: [
-                    .github(
-                        scope: ["user:email"],
-                    ),
-                    .google(
-                        scope: ["email", "profile"],
-                    ),
+                    .init(provider: .google()),                         // /auth/connect/google
+                    .init(provider: .github())                          // /auth/connect/github
                 ],
                 accountLinking: .init(
-                    strategy: .automatic(
-                        allowed: [.email, .phone],
-                        fallbackToManualOnMultipleMatches: true,
-                    )
-                )
+                    resolution: .automatic(
+                        matchBy: [.email, .phone],                      // Match only verified identifiers
+                        onAmbiguity: .requestManualSelection            // Fall back to manual on multiple matches
+                    ),
+                    stateExpiration: 600                                // Manual linking flow TTL (seconds)
+                ),
+                redirectLocation: "/dashboard"
             ),
             views: .init(
                 register: .init(
@@ -106,13 +105,13 @@ public func configure(_ app: Application) async throws {
                     ),
                     identifier: .email
                 ),
-                oauthLinkSelect: .init(
+                linkAccountSelect: .init(
                     style: .minimalism,
                     theme: .init(
                         colors: .mintDark
                     ),
                 ),
-                oauthLinkVerify: .init(
+                linkAccountVerify: .init(
                     style: .minimalism,
                     theme: .init(
                         colors: .mintDark
